@@ -48,6 +48,7 @@ def main():
         f.close()
 
     rects = open("coords.txt", 'a')
+    coords = []
     clock = pygame.time.Clock()
 
     while True:
@@ -58,6 +59,7 @@ def main():
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
+                coords.append((x, y))
                 rects.write(f"{x}, {y}\n")
 
             elif event.type == pygame.MOUSEBUTTONUP:
@@ -65,6 +67,10 @@ def main():
 
         screen.fill(pygame.Color('grey'))
         screen.blit(image, image.get_rect())
+
+        #Dots for previously selected points
+        for coord in coords:
+            pygame.draw.circle(screen, pygame.Color(0, 0, 0), coord, 5)
 
         #Top left coord text
         text = font.render(str(pygame.mouse.get_pos()), False, (0, 0, 0))
